@@ -24,7 +24,7 @@ Execute the following command to build this image using Microsoft Windows 2019:
 docker build --build-arg TAG=2019 -t windows-lighthouse:2019 .
 ```
 
-## Usage
+## Usage Instructions
 
 This project is designed to support Windows DevOps environments; therefore, the examples provided within this document are designed for PowerShell.
 
@@ -114,8 +114,6 @@ This project creates Docker Images that are compatible with Windows Server 2022 
 
 The Google Lighthouse CLI relies on the remote debugging tools supported by Google Chrome.
 
-For more information about the Google Chrome Chocolatey package, see the package's [official documentation](https://community.chocolatey.org/packages/GoogleChrome).
-
 *NOTE: At the time of writing, maintainers have no intentions of replacing Google Chrome with another Chrome-based browser.*
 
 ### Node Package Manager (NPM)
@@ -124,4 +122,4 @@ The Google Lighthouse CLI is written for the NodeJS runtime and is distributed v
 
 For more information about the Google Lighthouse CLI, see the tool's [official documentation](https://github.com/GoogleChrome/lighthouse).
 
-*NOTE: This project tracks the latest stable version of the Google Lighthouse CLI on available on NPM.*
+*NOTE: This project tracks the latest stable version of the Google Lighthouse CLI available on NPM.*

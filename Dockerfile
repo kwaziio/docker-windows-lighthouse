@@ -17,12 +17,6 @@ FROM ${REPO}:${TAG}
 
 COPY scripts C:\\Scripts
 
-#######################################################
-# Copies Fonts Available in Local Resources Directory #
-#######################################################
-
-COPY resources/*.ttf C:\\Fonts/
-
 #########################################################
 # Updates Execution Policy to Permit PowerShell Scripts #
 #########################################################
