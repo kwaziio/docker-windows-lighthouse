@@ -1,0 +1,6 @@
+###############################
+# Ignores Temporary Resources #
+###############################
+
+/reports/
+/resources/
