@@ -23,6 +23,12 @@ COPY scripts C:\\Scripts
 
 COPY resources/*.ttf C:\\Fonts/
 
+#########################################################
+# Updates Execution Policy to Permit PowerShell Scripts #
+#########################################################
+
+RUN powershell -Command Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
 #######################################################
 # Installs Google Chrome via Custom PowerShell Script #
 #######################################################
