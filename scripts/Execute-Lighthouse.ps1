@@ -143,7 +143,7 @@ try {
       $encodedPassword = [System.Net.WebUtility]::UrlEncode($securePassword)
 
       Write-Output "Injecting Basic Auth Credentials..."
-      $targetedURL = $targetedURL -Replace "://${encodedUsername}:${encodedPassword}@"
+      $targetedURL = $targetedURL -Replace "://", "://${encodedUsername}:${encodedPassword}@"
     }
 
     #######################################################
