@@ -3,35 +3,40 @@
 #############################################
 
 param (
-  [Int]          $ChromeDebugPort      = 9222,
-  [String]       $CustomAuthScript     = "C:\\Data\\authenticate.js",
-  [Bool]         $EnableAdvancedAuth   = $false,
-  [String]       $ExecuteAuthScript    = "C:\\Scripts\\Execute-Authentication.ps1",
-  [String]       $File                 = $null,
-  [Bool]         $ForceShutdown        = $false,
-  [Bool]         $InjectBasicCreds     = $false,
-  [String]       $LighthouseExecutable = "lighthouse",
-  [String]       $NPXExecutable        = "npx",
-  [SecureString] $Password             = $null,
-  [String]       $ReportDirectory      = "C:\Reports",
-  [String]       $ReportExtension      = "report.html",
-  [string]       $StartChromeScript    = "C:\\Scripts\\Start-Chrome.ps1",
-  [string]       $StopChromeScript     = "C:\\Scripts\\Stop-Chrome.ps1",
-  [String]       $URL                  = $null,
-  [String[]]     $URLs                 = @(),
-  [String]       $Username             = $null
+  [String]       $CertificateDirectory    = "C:\\Certificates",
+  [Int]          $ChromeDebugPort         = 9222,
+  [String]       $CustomAuthScript        = "C:\\Data\\authenticate.js",
+  [Bool]         $EnableAdvancedAuth      = $false,
+  [String]       $ExecuteAuthScript       = "C:\\Scripts\\Execute-Authentication.ps1",
+  [String]       $File                    = $null,
+  [Bool]         $ForceShutdown           = $false,
+  [Bool]         $InjectBasicCreds        = $false,
+  [String]       $LighthouseExecutable    = "lighthouse",
+  [Bool]         $LoadCertificates        = $false,
+  [String]       $NPXExecutable           = "npx",
+  [SecureString] $Password                = $null,
+  [String]       $ReportDirectory         = "C:\Reports",
+  [String]       $ReportExtension         = "report.html",
+  [string]       $StartChromeScript       = "C:\\Scripts\\Start-Chrome.ps1",
+  [string]       $StopChromeScript        = "C:\\Scripts\\Stop-Chrome.ps1",
+  [String]       $TrustCertificatesScript = "C:\\Scripts\\Trust-Certificates.ps1",
+  [String]       $URL                     = $null,
+  [String[]]     $URLs                    = @(),
+  [String]       $Username                = $null
 )
 
 #######################################################################
 # Overrides Default Values with Environment Variables (if Applicable) #
 #######################################################################
 
+if ($null -ne $env:CERTIFICATE_DIRECTORY) { $CertificateDirectory = [String]   $env:CERTIFICATE_DIRECTORY }
 if ($null -ne $env:CHROME_DEBUG_PORT)     { $ChromeDebugPort      = [Int]      $env:CHROME_DEBUG_PORT }
 if ($null -ne $env:CUSTOM_AUTH_SCRIPT)    { $CustomAuthScript     = [Int]      $env:CUSTOM_AUTH_SCRIPT }
 if ($null -ne $env:FILE)                  { $File                 = [String]   $env:FILE }
 if ($null -ne $env:FORCE_SHUTDOWN)        { $ForceShutdown        = [Bool]     $env:FORCE_SHUTDOWN }
 if ($null -ne $env:INJECT_BASIC_CREDS)    { $InjectBasicCreds     = [Bool]     $env:INJECT_BASIC_CREDS }
 if ($null -ne $env:LIGHTHOUSE_EXECUTABLE) { $LighthouseExecutable = [String]   $env:LIGHTHOUSE_EXECUTABLE }
+if ($null -ne $env:LOAD_CERTIFICATES)     { $LoadCertificates     = [Bool]     $env:LOAD_CERTIFICATES }
 if ($null -ne $env:NPX_EXECUTABLE)        { $NPXExecutable        = [String]   $env:NPX_EXECUTABLE }
 if ($null -ne $env:REPORTS_DIRECTORY)     { $ReportDirectory      = [String]   $env:REPORTS_DIRECTORY }
 if ($null -ne $env:REPORTS_EXTENSION)     { $ReportExtension      = [String]   $env:REPORTS_EXTENSION }
@@ -81,6 +86,14 @@ if ($URLs.Count -eq 0) {
   Exit 2
 }
 
+#######################################################################################
+# Adds Mounted Certificates to List of Trusted Certificates for Operating System (OS) #
+#######################################################################################
+
+if ($LoadCertificates) {
+  & $TrustCertificatesScript -CertificateDirectory $CertificateDirectory
+}
+
 #####################################################################
 # Launches Google Chrome with Debugging Enabled via External Script #
 #####################################################################
@@ -108,7 +121,7 @@ try {
     # Executes ICAM Authentication for Microsoft Environment #
     ##########################################################
 
-    if ($isFirst -and $EnableICAMAuth) {
+    if ($isFirst -and $EnableAdvancedAuth) {
       Write-Output "Advanced Authentication Enabled; Preparing to Authenticate as ${Username}..."
       & $ExecuteAuthScript `
         -ChromeDebugPort $ChromeDebugPort `
