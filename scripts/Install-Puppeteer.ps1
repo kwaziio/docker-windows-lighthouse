@@ -21,6 +21,3 @@ Write-Output "Installing Puppeteer via Node Package Manager (NPM)..."
 
 Write-Output "Installing YArgs Package via Node Package Manager (NPM)..."
 & $NPMExecutable install -g yargs
-
-Write-Output "Installing UUID Package via Node Package Manager (NPM)..."
-& $NPMExecutable install -g uuid

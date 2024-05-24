@@ -32,6 +32,7 @@ param (
 if ($null -ne $env:CERTIFICATE_DIRECTORY) { $CertificateDirectory = [String]   $env:CERTIFICATE_DIRECTORY }
 if ($null -ne $env:CHROME_DEBUG_PORT)     { $ChromeDebugPort      = [Int]      $env:CHROME_DEBUG_PORT }
 if ($null -ne $env:CUSTOM_AUTH_SCRIPT)    { $CustomAuthScript     = [Int]      $env:CUSTOM_AUTH_SCRIPT }
+if ($null -ne $env:ENABLE_ADVANCED_AUTH)  { $EnableAdvancedAuth   = [Bool]     $env:ENABLE_ADVANCED_AUTH }
 if ($null -ne $env:FILE)                  { $File                 = [String]   $env:FILE }
 if ($null -ne $env:FORCE_SHUTDOWN)        { $ForceShutdown        = [Bool]     $env:FORCE_SHUTDOWN }
 if ($null -ne $env:INJECT_BASIC_CREDS)    { $InjectBasicCreds     = [Bool]     $env:INJECT_BASIC_CREDS }

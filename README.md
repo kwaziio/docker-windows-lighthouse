@@ -69,16 +69,21 @@ The following table of environment variables are supported by this Docker image:
 
 Name | Description | Required (Y/N)
 --- | --- | ---
+CERTIFICATE_DIRECTORY | Directory Where Import-Ready Certificates are Available | N
 CHROME_DEBUG_PORT | Port to Utilize for Chrome Remote Debugging | N
 CHROME_DOWNLOAD_PATH | Path to Store Downloaded Chrome Installer | N
 CHROME_DOWNLOAD_URL | URL Utilized to Download Chrome Installer | N
 CHROME_EXECUTABLE | Path to Google Chrome Executable | N
 CHROME_LAUNCH_INTERVAL | Seconds to Wait Between Chrome Liveness Tests | N
 CHROME_LAUNCH_RETRIES | Maximum Number of Times to Run Chrome Liveness Tests | N
+CUSTOM_AUTH_SCRIPT | Path to Custom Script for Advanced Authentication Process | N
+ENABLE_ADVANCED_AUTH | `$true` or `1` if Advanced Authentication Should be Enabled | N
 FILE | Path to Target URL Definition File | Y*
 FONT_DIRECTORY | Directory Where Installable Fonts are Available | N
+FORCE_SHUTDOWN | `$true` or `1` if Container Should be Forcibly Shutdown | N
 INJECT_BASIC_CREDS | `$true` or `1` if Basic Auth Credentials are Required | N
 LIGHTHOUSE_EXECUTABLE | Path to Google Lighthouse CLI Executable | N
+LOAD_CERTIFICATES | `$true` or `1` if Custom Certificate Authorities Should be Imported | N
 NODE_DOWNLOAD_PATH | Path to Store Downloaded NodeJS Installer | N
 NODE_DOWNLOAD_URL | URL Utilized to Download NodeJS Installer | N
 NODE_EXECUTABLE | Path to NodeJS Executable | N
