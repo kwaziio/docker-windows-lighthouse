@@ -128,7 +128,6 @@ try {
         -ChromeDebugPort $ChromeDebugPort `
         -CustomAuthScript $CustomAuthScript `
         -InjectBasicCreds $InjectBasicCreds `
-        -NodeExecutable $NodeExecutable `
         -Password $Password `
         -URLs $URLs `
         -Username $Username
