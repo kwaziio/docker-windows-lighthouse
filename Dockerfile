@@ -47,6 +47,12 @@ RUN powershell -File C:\\scripts\\Install-Lighthouse.ps1
 
 RUN powershell -File C:\\scripts\\Install-Puppeteer.ps1
 
+#################################################
+# Updates Container Image Environment Variables #
+#################################################
+
+ENV NODE_PATH=C:\Users\ContainerAdministrator\AppData\Roaming\npm\node_modules
+
 ########################################################
 # Updates Metadata Associated with the Generated Image #
 ########################################################

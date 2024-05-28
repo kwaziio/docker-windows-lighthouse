@@ -186,6 +186,8 @@ try {
       Set-Content -Path "${ReportDirectory}\${reportPath}.${ReportExtension}" -Value $content
     }
 
+    $isFirst = $false
+
   }
 
 } catch {
