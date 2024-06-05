@@ -61,7 +61,7 @@ This method is most commonly helpful for scenarios where a Web Internet Informat
 
 ### Advanced Authentication Example
 
-TODO
+TODO: Provide Description and Examples
 
 ### Recognized Environment Variables
 
