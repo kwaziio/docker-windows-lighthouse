@@ -12,6 +12,7 @@ param (
   [Bool]         $ForceShutdown           = $false,
   [Bool]         $InjectBasicCreds        = $false,
   [String]       $LighthouseExecutable    = "lighthouse",
+  [String]       $LighthouseOptions       = "",
   [Bool]         $LoadCertificates        = $false,
   [String]       $NPXExecutable           = "npx",
   [SecureString] $Password                = $null,
@@ -37,6 +38,7 @@ if ($null -ne $env:FILE)                  { $File                 = [String]   $
 if ($null -ne $env:FORCE_SHUTDOWN)        { $ForceShutdown        = [Bool]     $env:FORCE_SHUTDOWN }
 if ($null -ne $env:INJECT_BASIC_CREDS)    { $InjectBasicCreds     = [Bool]     $env:INJECT_BASIC_CREDS }
 if ($null -ne $env:LIGHTHOUSE_EXECUTABLE) { $LighthouseExecutable = [String]   $env:LIGHTHOUSE_EXECUTABLE }
+if ($null -ne $env:LIGHTHOUSE_OPTIONS)    { $LighthouseOptions    = [String]   $env:LIGHTHOUSE_OPTIONS }
 if ($null -ne $env:LOAD_CERTIFICATES)     { $LoadCertificates     = [Bool]     $env:LOAD_CERTIFICATES }
 if ($null -ne $env:NPX_EXECUTABLE)        { $NPXExecutable        = [String]   $env:NPX_EXECUTABLE }
 if ($null -ne $env:REPORTS_DIRECTORY)     { $ReportDirectory      = [String]   $env:REPORTS_DIRECTORY }
@@ -169,7 +171,8 @@ try {
       --output=html `
       --output-path "${ReportDirectory}\${reportPath}.${ReportExtension}" `
       --port $ChromeDebugPort `
-      --quiet
+      --quiet `
+      $LighthouseOptions
 
     ###########################################################
     # Redacts Embedded Basic Auth Credentials (if Applicable) #
