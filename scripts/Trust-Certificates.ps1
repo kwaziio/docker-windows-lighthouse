@@ -3,7 +3,8 @@
 #############################################
 
 param (
-  [String] $CertificateDirectory = "C:\\Certificates"
+  [String] $CertificateDirectory = "C:\\Certificates",
+  [String] $CertificateFilter    = "*.cer"
 )
 
 #######################################################################
@@ -17,7 +18,7 @@ if ($null -ne $env:CERTIFICATE_DIRECTORY) { $CertificateDirectory = [String] $en
 ######################################################################################
 
 Write-Output "Retrieving List of Mounted Certificates..."
-$certificates = Get-ChildItem -Path $CertificateDirectory
+$certificates = Get-ChildItem -Path $CertificateDirectory -Filter $CertificateFilter
 
 foreach ($certificate in $certificates) {
   Write-Output "Adding $($certificate.FullName) to Trusted Certificate Store..."

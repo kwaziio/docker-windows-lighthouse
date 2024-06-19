@@ -3,51 +3,54 @@
 #############################################
 
 param (
-  [String]       $CertificateDirectory    = "C:\\Certificates",
-  [Int]          $ChromeDebugPort         = 9222,
-  [String]       $CustomAuthScript        = "C:\\Data\\authenticate.js",
-  [Bool]         $EnableAdvancedAuth      = $false,
-  [String]       $ExecuteAuthScript       = "C:\\Scripts\\Execute-Authentication.ps1",
-  [String]       $File                    = $null,
-  [Bool]         $ForceShutdown           = $false,
-  [Bool]         $InjectBasicCreds        = $false,
-  [String]       $LighthouseCategories    = "accessibility,best-practices,performance,seo",
-  [String]       $LighthouseExecutable    = "lighthouse",
-  [String]       $LighthousePreset        = "",
-  [Bool]         $LoadCertificates        = $false,
-  [String]       $NPXExecutable           = "npx",
-  [SecureString] $Password                = $null,
-  [String]       $ReportDirectory         = "C:\Reports",
-  [String]       $ReportExtension         = "report.html",
-  [string]       $StartChromeScript       = "C:\\Scripts\\Start-Chrome.ps1",
-  [string]       $StopChromeScript        = "C:\\Scripts\\Stop-Chrome.ps1",
-  [String]       $TrustCertificatesScript = "C:\\Scripts\\Trust-Certificates.ps1",
-  [String]       $URL                     = $null,
-  [String[]]     $URLs                    = @(),
-  [String]       $Username                = $null
+  [String]       $CertificateDirectory        = "C:\\Certificates",
+  [Int]          $ChromeDebugPort             = 9222,
+  [String]       $CustomAuthScript            = "C:\\Data\\authenticate.js",
+  [Bool]         $EnableAdvancedAuth          = $false,
+  [String]       $ExecuteAuthScript           = "C:\\Scripts\\Execute-Authentication.ps1",
+  [String]       $File                        = $null,
+  [Bool]         $ForceShutdown               = $false,
+  [Bool]         $ImportUserCertificate       = $false,
+  [String]       $ImportUserCertificateScript = "C:\\Scripts\\Import-UserCertificate.ps1",
+  [Bool]         $InjectBasicCreds            = $false,
+  [String]       $LighthouseCategories        = "accessibility,best-practices,performance,seo",
+  [String]       $LighthouseExecutable        = "lighthouse",
+  [String]       $LighthousePreset            = "",
+  [Bool]         $LoadCertificates            = $false,
+  [String]       $NPXExecutable               = "npx",
+  [SecureString] $Password                    = $null,
+  [String]       $ReportDirectory             = "C:\Reports",
+  [String]       $ReportExtension             = "report.html",
+  [string]       $StartChromeScript           = "C:\\Scripts\\Start-Chrome.ps1",
+  [string]       $StopChromeScript            = "C:\\Scripts\\Stop-Chrome.ps1",
+  [String]       $TrustCertificatesScript     = "C:\\Scripts\\Trust-Certificates.ps1",
+  [String]       $URL                         = $null,
+  [String[]]     $URLs                        = @(),
+  [String]       $Username                    = $null
 )
 
 #######################################################################
 # Overrides Default Values with Environment Variables (if Applicable) #
 #######################################################################
 
-if ($null -ne $env:CERTIFICATE_DIRECTORY) { $CertificateDirectory = [String]   $env:CERTIFICATE_DIRECTORY }
-if ($null -ne $env:CHROME_DEBUG_PORT)     { $ChromeDebugPort      = [Int]      $env:CHROME_DEBUG_PORT }
-if ($null -ne $env:CUSTOM_AUTH_SCRIPT)    { $CustomAuthScript     = [Int]      $env:CUSTOM_AUTH_SCRIPT }
-if ($null -ne $env:ENABLE_ADVANCED_AUTH)  { $EnableAdvancedAuth   = [Bool]     $env:ENABLE_ADVANCED_AUTH }
-if ($null -ne $env:FILE)                  { $File                 = [String]   $env:FILE }
-if ($null -ne $env:FORCE_SHUTDOWN)        { $ForceShutdown        = [Bool]     $env:FORCE_SHUTDOWN }
-if ($null -ne $env:INJECT_BASIC_CREDS)    { $InjectBasicCreds     = [Bool]     $env:INJECT_BASIC_CREDS }
-if ($null -ne $env:LIGHTHOUSE_CATEGORIES) { $LighthouseCategories = [String]   $env:LIGHTHOUSE_CATEGORIES }
-if ($null -ne $env:LIGHTHOUSE_EXECUTABLE) { $LighthouseExecutable = [String]   $env:LIGHTHOUSE_EXECUTABLE }
-if ($null -ne $env:LIGHTHOUSE_PRESET)     { $LighthousePreset     = [String]   $env:LIGHTHOUSE_PRESET }
-if ($null -ne $env:LOAD_CERTIFICATES)     { $LoadCertificates     = [Bool]     $env:LOAD_CERTIFICATES }
-if ($null -ne $env:NPX_EXECUTABLE)        { $NPXExecutable        = [String]   $env:NPX_EXECUTABLE }
-if ($null -ne $env:REPORTS_DIRECTORY)     { $ReportDirectory      = [String]   $env:REPORTS_DIRECTORY }
-if ($null -ne $env:REPORTS_EXTENSION)     { $ReportExtension      = [String]   $env:REPORTS_EXTENSION }
-if ($null -ne $env:URL)                   { $URL                  = [String]   $env:URL }
-if ($null -ne $env:URLs)                  { $URLs                 = [String[]] $env:URLs -Split "," }
-if ($null -ne $env:USERNAME)              { $Username             = [String]   $env:USERNAME }
+if ($null -ne $env:CERTIFICATE_DIRECTORY)   { $CertificateDirectory  = [String]   $env:CERTIFICATE_DIRECTORY }
+if ($null -ne $env:CHROME_DEBUG_PORT)       { $ChromeDebugPort       = [Int]      $env:CHROME_DEBUG_PORT }
+if ($null -ne $env:CUSTOM_AUTH_SCRIPT)      { $CustomAuthScript      = [Int]      $env:CUSTOM_AUTH_SCRIPT }
+if ($null -ne $env:ENABLE_ADVANCED_AUTH)    { $EnableAdvancedAuth    = [Bool]     $env:ENABLE_ADVANCED_AUTH }
+if ($null -ne $env:FILE)                    { $File                  = [String]   $env:FILE }
+if ($null -ne $env:FORCE_SHUTDOWN)          { $ForceShutdown         = [Bool]     $env:FORCE_SHUTDOWN }
+if ($null -ne $env:IMPORT_USER_CERTIFICATE) { $ImportUserCertificate = [Bool]     $env:IMPORT_USER_CERTIFICATE }
+if ($null -ne $env:INJECT_BASIC_CREDS)      { $InjectBasicCreds      = [Bool]     $env:INJECT_BASIC_CREDS }
+if ($null -ne $env:LIGHTHOUSE_CATEGORIES)   { $LighthouseCategories  = [String]   $env:LIGHTHOUSE_CATEGORIES }
+if ($null -ne $env:LIGHTHOUSE_EXECUTABLE)   { $LighthouseExecutable  = [String]   $env:LIGHTHOUSE_EXECUTABLE }
+if ($null -ne $env:LIGHTHOUSE_PRESET)       { $LighthousePreset      = [String]   $env:LIGHTHOUSE_PRESET }
+if ($null -ne $env:LOAD_CERTIFICATES)       { $LoadCertificates      = [Bool]     $env:LOAD_CERTIFICATES }
+if ($null -ne $env:NPX_EXECUTABLE)          { $NPXExecutable         = [String]   $env:NPX_EXECUTABLE }
+if ($null -ne $env:REPORTS_DIRECTORY)       { $ReportDirectory       = [String]   $env:REPORTS_DIRECTORY }
+if ($null -ne $env:REPORTS_EXTENSION)       { $ReportExtension       = [String]   $env:REPORTS_EXTENSION }
+if ($null -ne $env:URL)                     { $URL                   = [String]   $env:URL }
+if ($null -ne $env:URLs)                    { $URLs                  = [String[]] $env:URLs -Split "," }
+if ($null -ne $env:USERNAME)                { $Username              = [String]   $env:USERNAME }
 
 #########################################################################
 # Updates the Password Value for Basic Auth Credentials (if Applicable) #
@@ -96,7 +99,15 @@ if ($URLs.Count -eq 0) {
 #######################################################################################
 
 if ($LoadCertificates) {
-  & $TrustCertificatesScript -CertificateDirectory $CertificateDirectory
+  & $TrustCertificatesScript
+}
+
+#####################################################################
+# Imports User Certificate to Support Mutual-TLS (mTLS) Connections #
+#####################################################################
+
+if ($ImportUserCertificate) {
+  & $ImportUserCertificateScript
 }
 
 #####################################################################
